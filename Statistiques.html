@@ -1,1 +1,436 @@
 
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Billabong&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5em;
+            font-family: 'Billabong', cursive;
+            color: #007BFF;
+            border: 2px solid #007BFF;
+            padding: 3px;
+            border-radius: 5px;
+        }
+
+        .copyright-icon {
+            font-size: 0.6em;
+            color: #007BFF;
+            margin: 0 10px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #007BFF;
+            width: 100%;
+            margin: 2px 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
+            padding: 5px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin: 0 5px;
+            font-size: 0.8em;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .share-button {
+            background-color: #ffffff;
+            border: 1px solid #007BFF;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px;
+            color: #007BFF;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+
+        .share-button:hover {
+            background-color: #e9f5ff;
+        }
+
+        .category-select, .country-select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            border-top: 3px solid #007BFF;
+        }
+
+        .dashboard {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            overflow: auto;
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+
+        .card {
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: inherit;
+            border: 1px solid #007BFF;
+            transition: background 0.3s;
+        }
+
+        .small-card { height: 50px; }
+        .card:hover {
+            transform: translateY(-2px);
+            background: #e9f5ff;
+        }
+
+        .title { color: #666; font-size: 0.8rem; margin-bottom: 5px; }
+        .value { font-size: 1rem; font-weight: bold; color: #007BFF; }
+
+        @media (max-width: 500px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .title { font-size: 0.7rem; }
+            .value { font-size: 0.9rem; }
+        }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 33% auto; 
+            padding: 15px; /* Padding reduzido */
+            border: 1px solid #007BFF; 
+            border-radius: 10px; /* Raio de borda reduzido */
+            width: 80%; 
+            max-width: 290px; /* Largura reduzida */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            color: red; 
+            font-size: 20px; /* Tamanho de fonte reduzido */
+            font-weight: bold;
+            display: block; 
+            text-align: center; 
+            margin-bottom: 10px; /* Margem reduzida */
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: darkred; 
+        }
+
+        .modal p {
+            color: #333; 
+            font-size: 0.9em; /* Tamanho de fonte reduzido */
+            text-align: center; /* Texto centralizado */
+        }
+
+        .support-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px; /* Padding reduzido */
+            cursor: pointer;
+            font-size: 0.9em; /* Tamanho de fonte reduzido */
+            margin-top: 10px; /* Margem reduzida */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.3s;
+        }
+
+        .support-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBwfLgPM_tz2aFW33ck5iF9SPSxpPpYSHU",
+            authDomain: "genz-9f218.firebaseapp.com",
+            databaseURL: "https://genz-9f218-default-rtdb.firebaseio.com",
+            projectId: "genz-9f218",
+            storageBucket: "genz-9f218.appspot.com",
+            messagingSenderId: "286958713700",
+            appId: "1:286958713700:web:29d878befaf6dd8c049871",
+            measurementId: "G-P0W7NB022J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth();
+
+        let allData = {}; // Armazena dados globais
+
+        function fetchData() {
+            const birthdatesRef = ref(db, 'birthdates');
+            onValue(birthdatesRef, (snapshot) => {
+                allData = snapshot.val() || {}; // Armazena dados em uma variável global
+                console.log(allData); // Exibe dados recuperados
+                updateCountries(); // Atualiza países disponíveis
+                updateCards(); // Atualiza cartões com dados
+            });
+        }
+
+        function updateCountries() {
+            const countrySelect = document.getElementById('countrySelect');
+            const countries = new Set();
+
+            // Recupera países únicos dos dados
+            Object.keys(allData).forEach(userId => {
+                const userData = allData[userId];
+                countries.add(userData.country); // Garante que 'country' é uma propriedade de userData
+            });
+
+            // Preenche o seletor de países
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+        }
+
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDiff = today.getMonth() - birth.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function updateCards() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = ''; // Limpa o conteúdo atual
+
+            const selectedCountry = document.getElementById('countrySelect').value;
+            const selectedCategory = document.getElementById('categorySelect').value;
+
+            if (Object.keys(allData).length === 0) {
+                grid.innerHTML = '<p>Nenhum dado encontrado.</p>';
+                return;
+            }
+
+            const counts = {};
+
+            // Contar por categoria
+            Object.keys(allData).forEach(userId => {
+                const userData = allData[userId];
+                if (userData.country === selectedCountry || selectedCountry === '') {
+                    let key;
+                    if (selectedCategory === 'daily') {
+                        key = new Date(userData.date).toLocaleDateString('pt-BR', { weekday: 'long' });
+                    } else if (selectedCategory === 'monthly') {
+                        key = new Date(userData.date).toLocaleDateString('pt-BR', { month: 'long' });
+                    } else if (selectedCategory === 'yearly') {
+                        key = new Date(userData.date).getFullYear();
+                    } else if (selectedCategory === 'gender') {
+                        key = userData.gender; // Para a categoria 'gender'
+                    } else if (selectedCategory === 'age') {
+                        key = calculateAge(userData.date); // Calcula a idade
+                    } else if (selectedCategory === 'population') {
+                        key = userData.country; // Para população, usa o país
+                    }
+
+                    counts[key] = (counts[key] || 0) + 1;
+                }
+            });
+
+            // Exibe cartões
+            Object.keys(counts).forEach(key => {
+                const card = document.createElement('div');
+                card.className = 'card small-card';
+                card.innerHTML = `<div class="title">${key}</div><div class="value">${counts[key]}</div>`;
+                grid.appendChild(card);
+            });
+
+            // Se nenhum dado for encontrado
+            if (grid.innerHTML === '') {
+                grid.innerHTML = '<p>Nenhum dado encontrado.</p>';
+            }
+        }
+
+        // Função de debounce
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const categorySelect = document.getElementById('categorySelect');
+            const countrySelect = document.getElementById('countrySelect');
+
+            countrySelect.addEventListener('change', debounce(updateCards, 300));
+            categorySelect.addEventListener('change', debounce(updateCards, 300));
+            fetchData(); // Carrega dados na inicialização
+
+            // Abre modal de suporte
+            document.getElementById('supportBtn').onclick = function() {
+                document.getElementById('supportModal').style.display = 'block';
+            };
+
+            // Abre modal de FAQ
+            document.getElementById('faqBtn').onclick = function() {
+                document.getElementById('faqModal').style.display = 'block';
+            };
+
+            // Fecha modal
+            document.querySelectorAll('.close').forEach(closeButton => {
+                closeButton.onclick = function() {
+                    this.closest('.modal').style.display = 'none';
+                };
+            });
+
+            // Fecha modal clicando fora
+            window.onclick = function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            };
+
+            // Abre link do PayPal
+            document.getElementById('paypalBtn').onclick = function() {
+                window.location.href = 'https://www.paypal.com/ncp/payment/QN7HEGCSRYJKA';
+            };
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <a href="index.html" style="text-decoration: none;">
+        <h1 translate="no">GZ</h1>
+    </a>
+    <div class="copyright-icon">©️</div>
+    <a href="Partage.html">
+        <button class="share-button" aria-label="Compartilhar">
+            <i class="fas fa-share-alt"></i>
+        </button>
+    </a>
+</header>
+
+<div class="divider"></div>
+
+<div class="button-container">
+    <button id="faqBtn" class="button" aria-label="FAQ">
+        <i class="fas fa-question-circle" style="margin-right: 2px;"></i> FAQ
+    </button>
+    <button id="supportBtn" class="button" aria-label="Suporte" translate="no">
+        <i class="fas fa-hand-holding-heart" style="margin-right: 5px;"></i> Suporte
+    </button>
+</div>
+
+<div class="divider"></div>
+
+<div class="dashboard">
+    <select class="country-select" aria-label="Selecionar um país" id="countrySelect">
+        <option value="">Todos os países</option>
+        <!-- As opções de país serão adicionadas dinamicamente -->
+    </select>
+
+    <select class="category-select" aria-label="Selecionar uma categoria" id="categorySelect">
+        <option value="daily">Nascimentos por dia</option>
+        <option value="monthly">Nascimentos por mês</option>
+        <option value="yearly">Nascimentos por ano</option>
+        <option value="gender">Gênero</option>
+        <option value="age">Idades</option>
+        <option value="population">População</option> <!-- Opção População adicionada -->
+    </select>
+
+    <div class="grid" id="grid">
+        <!-- Os cartões serão gerados aqui -->
+    </div>
+</div>
+
+<!-- Modal de Suporte -->
+<div id="supportModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Obrigado por apoiar o G-Z! Cada apoio conta. Com a sua ajuda, poderemos continuar desenvolvendo este projeto empolgante, criar análises inovadoras e fornecer estatísticas gratuitas a um público global.</p>
+        <button id="paypalBtn" class="support-button">Eu apoio agora</button>
+    </div>
+</div>
+
+<!-- Modal de FAQ -->
+<div id="faqModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        As estatísticas são atualizadas automaticamente com cada envio nas tabelas.
+    </div>
+</div>
+</body>
+</html>
