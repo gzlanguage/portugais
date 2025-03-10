@@ -25,9 +25,9 @@
             font-family: 'Billabong', cursive;
             color: #007BFF; /* Cor azul */
             border: 1.5px solid #007BFF; /* Borda azul */
-            padding: 5px 10px;
+            padding: 4px;
             display: inline-block;
-            border-radius: 10px; /* Bordas arredondadas */
+            border-radius: 12px; /* Bordas arredondadas */
         }
         .divider {
             height: 1px;
@@ -55,7 +55,7 @@
         .social-icons {
             display: flex;
             justify-content: center;
-            gap: 15px; /* Espaço entre os ícones */
+            gap: 15px; /* Espaçamento entre ícones */
             margin-top: 20px;
         }
         .icon {
@@ -63,7 +63,7 @@
             color: #007BFF; /* Cor azul */
             transition: color 0.3s;
             border: 1px solid #007BFF; /* Borda azul */
-            border-radius: 3px;
+            border-radius: 10px;
             padding: 8px; 
             background-color: rgba(0, 119, 190, 0.1); /* Fundo claro */
             display: inline-block;
@@ -95,9 +95,10 @@
         }
         .copy-button {
             margin-top: 10px;
-            padding: 10px 20px;
+            padding: 10px 17px;
             border: 1px solid #007BFF; /* Borda azul */
-            background-color: transparent;
+            border-radius: 13px;
+            background-color: rgba(0, 119, 190, 0.1); /* Fundo claro */
             color: #007BFF; /* Cor azul */
             cursor: pointer;
             font-size: 16px;
@@ -111,12 +112,7 @@
             margin-top: 10px;
             color: #007BFF; /* Cor azul */
         }
-        .copyright {
-            margin-top: 40px;
-            color: darkgray;
-            font-size: 0.8em;
-            text-align: center;
-        }
+        
     </style>
 </head>
 <body>
@@ -129,18 +125,18 @@
     <div class="divider"></div>
 
     <div class="content">
-        <h1>Compartilhe GZ</h1>
+        <h1>Compartilhe G-Z</h1>
         <div class="short-divider"></div>
-        <p class="social-message">Vamos descobrir quem somos e como pertencemos a este mundo! Além do entretenimento, vamos aprender mais sobre a nossa geração:</p>
+        <p class="social-message">Vamos descobrir quem somos e como pertencemos ao mundo! Além do entretenimento, vamos aprender mais sobre nossas gerações:</p>
 
         <div class="social-icons">
             <a href="https://www.g-z.online" target="_blank" class="icon" onclick="share('Facebook')">
                 <i class="fab fa-facebook"></i>
             </a>
-            <a href="https://api.whatsapp.com/send?text=Junte-se%20ao%20G-Z%20!%20Vamos%20descobrir%20juntos%20os%20fascinantes%20segredos%20da%20nossa%20geração,%20com%20descobertas%20emocionantes%20e%20momentos%20divertidos.%20Seja%20parte%20desta%20aventura%20única!%20🌟%20https://www.g-z.online" target="_blank" class="icon" onclick="share('WhatsApp')">
+            <a href="https://api.whatsapp.com/send?text=Junte-se%20ao%20G-Z%20!%20Juntos,%20vamos%20descobrir%20os%20fascinantes%20segredos%20da%20nossa%20geração,%20entre%20descobertas%20emocionantes%20e%20momentos%20de%20entretenimento.%20Seja%20parte%20desta%20aventura%20única!%20🌟%20https://www.g-z.online" target="_blank" class="icon" onclick="share('WhatsApp')">
                 <i class="fab fa-whatsapp"></i>
             </a>
-            <a href="https://telegram.me/share/url?url=https://www.g-z.online&text=Junte-se%20ao%20G-Z%20!%20Vamos%20descobrir%20juntos%20os%20fascinantes%20segredos%20da%20nossa%20geração,%20com%20descobertas%20emocionantes%20e%20momentos%20divertidos.%20Seja%20parte%20desta%20aventura%20única!%20🌟" target="_blank" class="icon" onclick="share('Telegram')">
+            <a href="https://telegram.me/share/url?url=https://www.g-z.online&text=Junte-se%20ao%20G-Z%20!%20Juntos,%20vamos%20descobrir%20os%20fascinantes%20segredos%20da%20nossa%20geração,%20entre%20descobertas%20emocionantes%20e%20momentos%20de%20entretenimento.%20Seja%20parte%20desta%20aventura%20única!%20🌟" target="_blank" class="icon" onclick="share('Telegram')">
                 <i class="fab fa-telegram"></i>
             </a>
             <a href="https://www.g-z.online" target="_blank" class="icon" onclick="share('Twitter')">
@@ -155,22 +151,19 @@
             <span style="color: #007BFF;">Ou</span> <!-- Cor azul -->
         </div>
 
-        <p class="copy-message">Copie o link para compartilhar:</p>
+        <p class="copy-message">Copie o link de compartilhamento:</p>
         <button class="copy-button" onclick="copyLink()">Copiar</button>
         <p class="copy-status" id="copyStatus"></p>
     </div>
 
-    <div class="copyright">
-        &copy; 2025 <span translate="no">G-Z</span>. Todos os direitos reservados.
-    </div>
-
+    
     <script>
-        const shareText = "Junte-se ao G-Z! Vamos descobrir juntos os fascinantes segredos da nossa geração, com descobertas emocionantes e momentos divertidos. Seja parte desta aventura única! 🌟";
+        const shareText = "Junte-se ao G-Z! Juntos, vamos descobrir os fascinantes segredos da nossa geração, entre descobertas emocionantes e momentos de entretenimento. Seja parte desta aventura única! 🌟";
         const shareLink = "https://www.g-z.online";
 
         function copyLink() {
             navigator.clipboard.writeText(shareLink).then(() => {
-                document.getElementById("copyStatus").innerText = "O seguinte link de compartilhamento foi copiado para a sua área de transferência: " + shareLink;
+                document.getElementById("copyStatus").innerText = "O seguinte link de compartilhamento foi copiado para sua área de transferência: " + shareLink;
             }).catch(err => {
                 console.error("Erro ao copiar o texto: ", err);
                 document.getElementById("copyStatus").innerText = "Erro ao copiar o texto.";
@@ -184,7 +177,7 @@
                     url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}&quote=${encodeURIComponent(shareText)}`;
                     break;
                 case 'WeChat':
-                    alert("Compartilhar no WeChat geralmente é feito pelo aplicativo.");
+                    alert("O compartilhamento no WeChat geralmente é feito pelo aplicativo.");
                     return;
                 case 'Twitter':
                     url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareLink)}&text=${encodeURIComponent(shareText)}`;
